@@ -6,7 +6,7 @@ todoInput.addEventListener('keydown', (event) => {
     todoInput.value = '';
   }
 });
-const todoAdd: HTMLButtonElement = document.getElementById('todo-add');
+const todoAdd = document.getElementById('todo-add');
 todoAdd.addEventListener('click', (event) => {
   addItem(todoInput.value);
   todoInput.value = '';
@@ -29,7 +29,10 @@ function addItem(title: string) {
     headers: { 'Content-Type': 'application/json' }
   })
     .then((response) => response.json())
-    .then((result) => document.body.appendChild(from(result)));
+    .then((result) => {
+      document.body.appendChild(from(result));
+      console.log(result);
+    });
 }
 
 function updateItem(attributes) {
@@ -43,12 +46,14 @@ function updateItem(attributes) {
 }
 
 function deleteItem(todoItem: HTMLDivElement) {
-  console.log(`Deleted: ${todoItem.id}`);
   fetch(`/api/todos/${todoItem.id}`, {
     method: 'DELETE'
   })
     .then((response) => response.json())
-    .then((result) => todoItem.remove());
+    .then((result) => {
+      todoItem.remove();
+      console.log(result);
+    });
 }
 
 /**

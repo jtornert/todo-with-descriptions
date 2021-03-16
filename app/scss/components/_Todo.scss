@@ -21,7 +21,11 @@
     flex-direction: column;
 
     &.completed {
-      background-color: lightseagreen;
+      background-color: mediumseagreen;
+
+      .todo-title {
+        text-decoration: line-through;
+      }
     }
   }
 
@@ -35,7 +39,8 @@
     font-weight: 700;
     margin: 0;
     word-wrap: break-word;
-    max-width: 60ch;
+    min-width: 20rem;
+    max-width: 30ch;
     @include placeholder('Title');
   }
 
@@ -44,6 +49,7 @@
     word-wrap: break-word;
     margin: 0;
     margin-top: 1rem;
+    max-width: 50ch;
     @include placeholder('Add description');
   }
 

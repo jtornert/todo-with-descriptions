@@ -1,12 +1,10 @@
 import * as express from 'express';
 import Server from '../Server';
 
-export default function config(app: Server) {
-  const router = express.Router();
+const router = express.Router();
 
-  router.get('/', (req, res) => {
-    res.sendFile('index.html', { root: app.root });
-  });
+router.get('/', (req, res) => {
+  res.sendFile('index.html', { root: Server.root });
+});
 
-  return router;
-}
+export default router;
