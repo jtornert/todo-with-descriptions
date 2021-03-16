@@ -1,5 +1,3 @@
-import * as crypto from 'crypto';
-
 let memory = '';
 const todoInput: HTMLInputElement = document.getElementById('todo-input');
 todoInput.addEventListener('keydown', (event) => {
