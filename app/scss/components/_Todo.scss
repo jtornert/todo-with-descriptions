@@ -1,0 +1,61 @@
+@mixin placeholder($content) {
+  position: relative;
+
+  &:empty::after {
+    content: $content;
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: dimgray;
+    margin: 0;
+    pointer-events: none;
+  }
+}
+
+.todo {
+  &-item {
+    margin-top: 1rem;
+    background-color: gainsboro;
+    max-width: 80ch;
+    display: flex;
+    flex-direction: column;
+
+    &.completed {
+      background-color: lightseagreen;
+    }
+  }
+
+  &-content {
+    position: relative;
+  }
+
+  &-title {
+    display: block;
+    font-size: 1.75em;
+    font-weight: 700;
+    margin: 0;
+    word-wrap: break-word;
+    max-width: 60ch;
+    @include placeholder('Title');
+  }
+
+  &-description {
+    display: block;
+    word-wrap: break-word;
+    margin: 0;
+    margin-top: 1rem;
+    @include placeholder('Add description');
+  }
+
+  &-check {
+    position: absolute;
+    top: 0;
+    right: 2rem;
+  }
+
+  &-delete {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+}
