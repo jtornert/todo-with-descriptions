@@ -4,7 +4,7 @@
   "description": "",
   "main": "server/index.js",
   "scripts": {
-    "dev": "parcel app/index.html",
+    "dev": "parcel watch app/index.html",
     "build": "parcel build app/index.html",
     "compile": "tsc --watch",
     "start": "node server/index.js",
