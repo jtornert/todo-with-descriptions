@@ -5,11 +5,13 @@ const todoInput: HTMLInputElement = document.getElementById('todo-input');
 todoInput.addEventListener('keydown', (event) => {
   if (event.key == 'Enter') {
     addItem(todoInput.value);
+    todoInput.value = '';
   }
 });
 const todoAdd: HTMLButtonElement = document.getElementById('todo-add');
 todoAdd.addEventListener('click', (event) => {
   addItem(todoInput.value);
+  todoInput.value = '';
 });
 
 export function refresh() {
@@ -23,7 +25,6 @@ export function refresh() {
 }
 
 function addItem(title: string) {
-  todoInput.value = '';
   fetch('/api/todos', {
     method: 'POST',
     body: JSON.stringify({ title: title }),
