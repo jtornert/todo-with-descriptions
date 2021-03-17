@@ -1,10 +1,10 @@
 import * as express from 'express';
-import Server from '../Server';
+import * as paths from '../utils/paths';
 
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  res.sendFile('index.html', { root: Server.root });
+  res.sendFile('index.html', { root: paths.root });
 });
 
 export default router;
