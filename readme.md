@@ -2,16 +2,18 @@
 
 Very generic. Very cool. Very boring.
 
-# How to build
+# `npm` scripts
 
-Use ```npm run compile``` to build the server.
+`npm run start:dev` - Start Typescript development server.
 
-Use ```npm run start``` to start the server.
+`npm run start` - Start the compiled server.
 
-Use ```npm run watch``` to start the server with auto-refresh.
+`npm run start:db` - Start MongoDB database server.
 
-Use ```npm run dev``` to start front-end auto-refresh.
+`npm run watch` - Start the server with auto-refresh.
 
-Use ```npm run build``` to build the front-end app.
+`npm run dev` - Start front-end auto-refresh.
 
-*Note: in order for the database to work, a local MongoDB server must be setup.*
+`npm run build` - Build the front-end app.
+
+**Note: in order for the database to work, a local MongoDB server must be setup.**

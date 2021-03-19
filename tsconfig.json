@@ -1,8 +1,10 @@
 {
   "compilerOptions": {
-    "target": "ES6",
+    "target": "ES5",
     "module": "CommonJS",
     "moduleResolution": "node",
+    "rootDir": "src",
+    "outDir": "server",
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
@@ -14,8 +16,6 @@
     "allowUmdGlobalAccess": false,
     "allowUnusedLabels": false,
     "removeComments": true,
-    "rootDir": "src",
-    "outDir": "server"
   },
   "exclude": [
     "node_modules",

@@ -4,11 +4,16 @@
   "description": "",
   "main": "server/index.js",
   "scripts": {
-    "dev": "parcel watch app/index.html",
-    "build": "parcel build app/index.html",
-    "compile": "tsc --watch",
+    "build": "tsc && gulp && parcel build app/index.html",
+    "build:server": "tsc",
+    "build:app": "parcel build app/index.html",
+    "test": "gulp",
+    "start:dev": "nodemon src/index.ts",
     "start": "node server/index.js",
-    "watch": "nodemon server/index.js"
+    "start:db": "C:/mongodb/bin/mongod.exe",
+    "start:watch": "nodemon server/index.js",
+    "watch:app": "parcel watch app/index.html",
+    "watch:server": "tsc --watch src/index.ts --outDir server"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +28,7 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "gulp": "^4.0.2",
     "mongoose": "^5.12.0"
   }
 }

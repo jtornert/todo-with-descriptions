@@ -1,65 +1,13 @@
-let memory = '';
-const todoInput: HTMLInputElement = document.getElementById('todo-input');
-todoInput.addEventListener('keydown', (event) => {
-  if (event.key == 'Enter') {
-    addItem(todoInput.value);
-    todoInput.value = '';
-  }
-});
-const todoAdd = document.getElementById('todo-add');
-todoAdd.addEventListener('click', (event) => {
-  addItem(todoInput.value);
-  todoInput.value = '';
-});
+import * as TodoListImpl from './TodoList.impl';
 
-export function refresh() {
-  fetch('/api/todos')
-    .then((todos) => todos.json())
-    .then((result) => {
-      result.forEach((element) => {
-        document.body.appendChild(from(element));
-      });
-    });
+interface Todo {
+  _id: string;
+  title: string;
+  description: string;
+  completed: boolean;
 }
 
-function addItem(title: string) {
-  fetch('/api/todos', {
-    method: 'POST',
-    body: JSON.stringify({ title: title }),
-    headers: { 'Content-Type': 'application/json' }
-  })
-    .then((response) => response.json())
-    .then((result) => {
-      document.body.appendChild(from(result));
-      console.log(result);
-    });
-}
-
-function updateItem(attributes) {
-  fetch(`/api/todos/${attributes.id}`, {
-    method: 'PATCH',
-    body: JSON.stringify(attributes),
-    headers: { 'Content-Type': 'application/json' }
-  })
-    .then((response) => response.json())
-    .then((result) => console.log(result));
-}
-
-function deleteItem(todoItem: HTMLDivElement) {
-  fetch(`/api/todos/${todoItem.id}`, {
-    method: 'DELETE'
-  })
-    .then((response) => response.json())
-    .then((result) => {
-      todoItem.remove();
-      console.log(result);
-    });
-}
-
-/**
- * Returns a Todo component.
- */
-export function from(element): HTMLDivElement {
+export default function (element: Todo): HTMLDivElement {
   const root = document.createElement('div');
   root.classList.add('container', 'todo-item');
   if (element.completed) root.classList.add('completed');
@@ -74,11 +22,11 @@ export function from(element): HTMLDivElement {
   titleNode.contentEditable = 'true';
   titleNode.innerText = element.title;
   titleNode.addEventListener('focusin', () => {
-    memory = titleNode.innerText;
+    TodoListImpl.temp(titleNode.innerText);
   });
   titleNode.addEventListener('focusout', () => {
-    if (titleNode.innerText != memory)
-      updateItem({ id: root.id, title: titleNode.innerText });
+    if (titleNode.innerText != TodoListImpl.temp())
+      TodoListImpl.updateItem({ id: root.id, title: titleNode.innerText });
   });
   contentNode.appendChild(titleNode);
 
@@ -88,11 +36,11 @@ export function from(element): HTMLDivElement {
   descriptionNode.innerText =
     element.description !== undefined ? element.description : '';
   descriptionNode.addEventListener('focusin', () => {
-    memory = descriptionNode.innerText;
+    TodoListImpl.temp(descriptionNode.innerText);
   });
   descriptionNode.addEventListener('focusout', () => {
-    if (descriptionNode.innerText != memory)
-      updateItem({
+    if (descriptionNode.innerText != TodoListImpl.temp())
+      TodoListImpl.updateItem({
         id: root.id,
         description: descriptionNode.innerText
       });
@@ -101,19 +49,31 @@ export function from(element): HTMLDivElement {
 
   const buttonCheck = document.createElement('button');
   buttonCheck.classList.add('button', 'todo-check');
-  buttonCheck.innerHTML = '&#10003; Complete';
+  buttonCheck.style.color = 'mediumseagreen';
+  buttonCheck.innerHTML = element.completed
+    ? '<i class="fas fa-check-circle"/>'
+    : '<i class="far fa-check-circle"/>';
   buttonCheck.addEventListener('click', () => {
     root.classList.toggle('completed');
-    const completed = root.classList.contains('completed') ? true : false;
-    updateItem({ id: root.id, completed: completed });
+    const completed = root.classList.contains('completed');
+    TodoListImpl.updateItem({ id: root.id, completed: completed });
+    if (completed) {
+      if (TodoListImpl.is({ showCompleted: false })) root.remove();
+      else {
+        buttonCheck.innerHTML = '<i class="fas fa-check-circle"/>';
+      }
+    } else {
+      buttonCheck.innerHTML = '<i class="far fa-check-circle"/>';
+    }
   });
   contentNode.appendChild(buttonCheck);
 
   const buttonDelete = document.createElement('button');
   buttonDelete.classList.add('button', 'todo-delete');
-  buttonDelete.innerHTML = '&#10005;';
+  buttonDelete.innerHTML = '<i class="fas fa-times-circle"/>';
+  buttonDelete.style.color = 'crimson';
   buttonDelete.addEventListener('click', () => {
-    deleteItem(root);
+    TodoListImpl.deleteItem(root);
   });
   contentNode.appendChild(buttonDelete);
 

@@ -7,11 +7,15 @@
     <title>Todo</title>
     <link rel="stylesheet" href="./scss/main.scss" />
     <script src="./ts/index.ts" defer></script>
+    <script src="./fontawesome/js/all.min.js" defer></script>
   </head>
   <body>
     <h1>Input</h1>
-    <label for="todo-input"></label>
+    <label for="todo-input">Title</label>
     <input type="text" id="todo-input" />
     <button class="button" id="todo-add">+ Add</button>
+    <label for="todo-display-completed">Display complete:</label>
+    <input type="checkbox" id="todo-display-completed" />
+    <div id="todo-list"></div>
   </body>
 </html>

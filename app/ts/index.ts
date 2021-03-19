@@ -1,3 +1,3 @@
-import * as Todo from './components/Todo';
+import * as TodoListImpl from './components/TodoList.impl';
 
-Todo.refresh();
+TodoListImpl.init();
